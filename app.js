@@ -59,8 +59,8 @@ function serve() {
   });
 
   app.post('/signup', function(req, res) {
-    let query = 'INSERT INTO users(login, password) VALUES (?, ?)';
-    database.query(query, [req.body.login, req.body.password])
+    let query = 'INSERT INTO users(login, password, finame, faname) VALUES (?, ?, ?, ?)';
+    database.query(query, [req.body.login, req.body.password, req.body.finame, req.body.faname])
     .then (rows => {
       console.log(rows);
       if(rows.length > 0) {
@@ -82,7 +82,7 @@ function serve() {
       if(rows.length > 0) {
         console.log("seeded alerts for id " + req.body.id);
 
-        res.json({message: 'here ur alerts', result: 'ok', alerts: rows);
+        res.json({message: 'here ur alerts', result: 'ok', alerts: rows});
       } else {
         console.log("no alerts for id " + req.body.id);
 
