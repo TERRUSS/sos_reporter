@@ -48,7 +48,7 @@ function serve() {
       if(rows.length > 0) {
         console.log("login successful");
 
-        res.json({message: 'gg', result: 'ok', id: rows[1]});
+        res.json({message: 'gg', result: 'ok', id: rows[0]});
       } else {
         console.log("login error");
 
@@ -62,16 +62,7 @@ function serve() {
     let query = 'INSERT INTO users(login, password, finame, faname) VALUES (?, ?, ?, ?)';
     database.query(query, [req.body.login, req.body.password, req.body.finame, req.body.faname])
     .then (rows => {
-      console.log(rows);
-      if(rows.length > 0) {
-        console.log("signup successful");
-
-        res.json({message: 'ur signed up bro', result: 'ok', id: rows[1]});
-      } else {
-        console.log("signup error");
-
-        res.json({message: 'signup error', result: 'error'})
-      }
+      res.json({message: 'ur signed up bro', result: 'ok', id: rows[0]});
     });
   });
 
@@ -91,9 +82,21 @@ function serve() {
     });
   });
 
+  app.post('/listallalerts', function(req, res) {
+    let query = 'SELECT id, (select finame from users where id = user_id) as finame, (select faname from users where id = user_id) as faname, date, lat, lng';
+    database.query(query)
+    .then (rows => {
+      if(rows.length > 0) {
+        res.json({message: 'here ur alerts', result: 'ok', alerts: rows});
+      } else {
+        res.json({message: 'no alerts for u', result: 'error'})
+      }
+    });
+  });
+
   app.post('/newalerts', function(req, res) {
-    let query = 'INSERT INTO alerts(user_id, lat, lng) VALUES (?, ?, ?)';
-    database.query(query, [req.body.id, req.body.lng, req.body.lng])
+    let query = 'INSERT INTO alerts(user_id, date, lat, lng) VALUES (?, ?, ?, ?)';
+    database.query(query, [req.body.id, req.body.date, req.body.latitude, req.body.longitude])
     .then (rows => {
       if(rows.length > 0) {
         console.log("added alert for id " + req.body.id);
@@ -107,11 +110,26 @@ function serve() {
     });
   });
 
+  app.post('/isadmin', function(req, res) {
+
+    console.log("is admin " + req.body.login +" : "+ req.body.password);
+
+    let query = 'SELECT admin FROM users WHERE id = ?;';
+    database.query(query, [req.body.id])
+    .then (rows => {
+      if(rows[0].admin) {
+        res.json({message: 'ok ur admin boi', result: true});
+      } else {
+        res.json({message: 'nop', result: false})
+      }
+    });
+
+  });
+
   app.post('*', function(req, res) {
     res.json({message: 'Fais pas ta pute'})
   });
 
-  app.listen(6666);
+  app.listen(80);
 
-  console.log("Serving...");
 }

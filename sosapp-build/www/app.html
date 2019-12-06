@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="GeoFlexo">
+    <meta name="author" content="ARVETO X Maxime VINCENT - ISTY">
+
+    <title>GeoFlexo</title>
+	
+	<script>
+	id = sessionStorage.getItem("id");
+	var path = window.location.pathname;
+	var page = path.split("/").pop();
+
+	if((id == null || id == "undefined" ) && page == "app.html"){
+		window.stop();
+		window.location.href = "index.html";
+	}else if ((id != null || id != "undefined" )){
+		var xhttplogin = new XMLHttpRequest();
+		xhttplogin.onreadystatechange = function() {
+			if (this.readyState == 4 && this.status == 200) {						
+				jsonlist = JSON.parse(this.response);
+				if (jsonlist["result"] == true){
+					window.stop();
+					window.location.href = "admin.html";
+				}
+				
+			}
+		};
+		url_send = "id="+id;
+		xhttplogin.open("post", 'https://arveto.io/isadmin', false);
+		xhttplogin.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+		xhttplogin.send(url_send);
+	}
+	
+	
+	
+	</script>
+		
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="./css/app.css" rel="stylesheet">
+  </head>
+
+  <body>
+	<div class="text-center " id="main-content">
+  
+		<div class="conteneur-app">
+			<img class="mb-4" src="./img/logo-geoflexo.png" alt="" width="200" height="100">
+			<h3 class="h3 mb-3 font-weight-normal">En cas de problème appuyez sur le bouton ci-dessous</h3>
+				
+			<div class="form-signin">
+			  <button onclick="sos()" class="btn btn-lg rounded btn-outline-danger w-75 h-75 m-3" id="btnsos">SOS</button>
+			</div>
+			<small class="mt-2">En appuyant sur ce bouton vous allez prévenir XXX que vous avez un souci, 
+			l'application va vous localiser afin que des médecins puissent venir vous aider.</small>
+		</div>
+	</div>
+	
+  </body>
+  
+  <footer id="sticky-footer" class="py-4">
+		<div class="container text-center">
+			<small>Copyright &copy; ADEI - <a href="https://arveto.io">Arveto</a> x <a href="https://maximevincent.fr">Maxime</a> - ISTY 2019</small>
+		</div>
+	</footer>
+  
+  <script src="./js/jquery-3.4.1.slim.min.js" ></script>
+	<script src="./js/popper.min.js"></script>
+	<script src="./js/bootstrap.min.js" ></script>
+  <script src="./js/app.js"></script>
+
+</html>
