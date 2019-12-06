@@ -10,6 +10,7 @@ let options = {
 	cert: fs.readFileSync('/etc/letsencrypt/live/arveto.io/fullchain.pem', 'utf8'),
 }
 
+<<<<<<< HEAD
 
 app.use(function(req, res, next) {
 
@@ -21,10 +22,13 @@ app.use(function(req, res, next) {
 
 });
 
+=======
+>>>>>>> 0d80f0f9404d29e02fa7dd629d5fdf42bd849318
 /******************************************************************************/
 
 app.use(require('express').static(__dirname + '/public'));
 
+<<<<<<< HEAD
 app.use(require('express').static(__dirname + '/henrotte'));
 
 app.get('/', (req, res) => {
@@ -35,11 +39,23 @@ app.get('/henrotte', (req, res) => {
     res.sendFile(__dirname + '/index.html');
 });
 
+=======
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
+>>>>>>> 0d80f0f9404d29e02fa7dd629d5fdf42bd849318
 
 app.get('/app', (req, res) => {
     res.sendFile(__dirname + '/public/app.html');
 });
+<<<<<<< HEAD
 
+=======
+cd updated() {
+  //do something after updating vue instance
+
+}
+>>>>>>> 0d80f0f9404d29e02fa7dd629d5fdf42bd849318
 https.createServer(options, app).listen(443);
 
 http.createServer(function (req, res) {
@@ -126,8 +142,25 @@ function serve() {
   });
 
   app.post('/listallalerts', function(req, res) {
+<<<<<<< HEAD
     let query = 'SELECT id, (select finame from users where id = user_id) as finame, (select faname from users where id = user_id) as faname, date, lat, lng FROM alerts';
     database.query(query)
+=======
+    let query = 'SELECT id, (select finame from users where id = user_id) as finame, (select faname from users where id = user_id) as faname, date, lat, lng';
+    database.query(query)
+    .then (rows => {
+      if(rows.length > 0) {
+        res.json({message: 'here ur alerts', result: 'ok', alerts: rows});
+      } else {
+        res.json({message: 'no alerts for u', result: 'error'})
+      }
+    });
+  });
+
+  app.post('/newalerts', function(req, res) {
+    let query = 'INSERT INTO alerts(user_id, date, lat, lng) VALUES (?, ?, ?, ?)';
+    database.query(query, [req.body.id, req.body.date, req.body.latitude, req.body.longitude])
+>>>>>>> 0d80f0f9404d29e02fa7dd629d5fdf42bd849318
     .then (rows => {
       if(rows.length > 0) {
         res.json({message: 'here ur alerts', result: 'ok', alerts: rows});
@@ -163,9 +196,28 @@ function serve() {
 
   });
 
+  app.post('/isadmin', function(req, res) {
+
+    console.log("is admin " + req.body.login +" : "+ req.body.password);
+
+    let query = 'SELECT admin FROM users WHERE id = ?;';
+    database.query(query, [req.body.id])
+    .then (rows => {
+      if(rows[0].admin) {
+        res.json({message: 'ok ur admin boi', result: true});
+      } else {
+        res.json({message: 'nop', result: false})
+      }
+    });
+
+  });
+
   app.post('*', function(req, res) {
     res.json({message: 'Fais pas ta pute'})
   });
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0d80f0f9404d29e02fa7dd629d5fdf42bd849318
 }

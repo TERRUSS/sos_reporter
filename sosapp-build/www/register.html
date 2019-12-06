@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="GeoFlexo">
+    <meta name="author" content="ARVETO X Maxime VINCENT - ISTY">
+
+    <title>GeoFlexo</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+	<script>
+	id = sessionStorage.getItem("id");
+	var path = window.location.pathname;
+	var page = path.split("/").pop();
+	if (id != null && id != "undefined"  && page != "app.html"){
+		window.stop();
+		window.location.href = "app.html";
+	}
+
+	</script>
+	
+	
+
+    <!-- Custom styles for this template -->
+    <link href="./css/app.css" rel="stylesheet">
+  </head>
+
+  <body>
+	<div class="text-center " id="main-content">
+		<form action="app.html" class="conteneur-app needs-validation" novalidate>
+			<img class="mb-4" src="./img/logo-geoflexo.png" alt="" width="280" height="140">
+			<h1 class="h3 mb-3 font-weight-normal">Merci d'entrées vos informations personnel</h1>
+			
+			<div class="mb-1">
+				<label for="prenom" class="sr-only">Prénom</label>
+				<input type="text" id="prenom" class="form-control" placeholder="Prénom" required autofocus>
+				<div class="invalid-feedback">
+					Merci de renseigner votre prénom
+				</div>
+			</div>
+			
+			<div class="mb-1">
+				<label for="nom" class="sr-only">Nom</label>
+				<input type="text" id="nom" class="form-control" placeholder="Nom" required>
+				<div class="invalid-feedback">
+					Merci de renseigner votre nom
+				</div>
+			</div>
+			
+			<div class="mb-1">
+
+				<label for="mdp" class="sr-only">Mot de passe</label>
+				<input type="password" id="mdp" class="form-control" placeholder="Mot de passe" required>
+				<div class="invalid-feedback">
+					Merci de renseigner votre mot de passe
+				  </div>
+			</div>
+			
+			<button class="btn btn-lg btn-primary btn-block" type="submit" id="btnSignup">S'enregistrer</button>
+		  
+		</form>
+		</div>
+
+
+  </body>
+  
+	<footer id="sticky-footer" class="py-4">
+		<div class="container text-center">
+			<small>Copyright &copy; ADEI - <a href="https://arveto.io">Arveto</a> x <a href="https://maximevincent.fr">Maxime</a> - ISTY 2019</small>
+		</div>
+	</footer>
+	
+	<script src="./js/jquery-3.4.1.slim.min.js" ></script>
+	<script src="./js/popper.min.js"></script>
+	<script src="./js/bootstrap.min.js" ></script>
+  <script src="./js/app.js"></script>
+  
+</html>
