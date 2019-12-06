@@ -21,7 +21,10 @@ app.get('/', (req, res) => {
 app.get('/app', (req, res) => {
     res.sendFile(__dirname + '/public/app.html');
 });
+cd updated() {
+  //do something after updating vue instance
 
+}
 https.createServer(options, app).listen(443);
 
 http.createServer(function (req, res) {
@@ -154,7 +157,5 @@ function serve() {
   app.post('*', function(req, res) {
     res.json({message: 'Fais pas ta pute'})
   });
-
-  app.listen(80);
 
 }
